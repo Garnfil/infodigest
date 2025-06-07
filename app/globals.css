@@ -120,3 +120,24 @@
         @apply bg-background text-foreground;
     }
 }
+
+.prose {
+  max-width: 100%;
+  line-height: 1.6;
+}
+
+.prose h1, .prose h2, .prose h3 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+}
