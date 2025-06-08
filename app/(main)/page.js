@@ -14,59 +14,15 @@ import {
   Clock,
   Zap,
 } from "lucide-react";
-import Link from "next/link";
-import Footer from "@/components/footer";
+
+export const metadata = {
+  title: "InfoDigest Pro",
+  description: "InfoDigest.",
+};
 
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen w-full bg-white">
-      {/* Header */}
-      <header className="container mx-auto px-4 lg:px-6 h-16 flex items-center border-b border-gray-100">
-        <Link href="/" className="flex items-center justify-center">
-          <div className="w-8 h-8 rounded-lg bg-[#0e716d] flex items-center justify-center mr-2">
-            <Brain className="h-5 w-5 text-white" />
-          </div>
-          <span className="font-bold text-xl text-gray-900">
-            InfoDigest Pro
-          </span>
-        </Link>
-        <nav className="ml-auto flex items-center gap-6">
-          <Link
-            href="/"
-            className="text-sm font-medium text-gray-600 hover:text-[#0e716d] transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            href="#features"
-            className="text-sm font-medium text-gray-600 hover:text-[#0e716d] transition-colors"
-          >
-            Features
-          </Link>
-          <Link
-            href="#testimonials"
-            className="text-sm font-medium text-gray-600 hover:text-[#0e716d] transition-colors"
-          >
-            Reviews
-          </Link>
-          <Link
-            href="#pricing"
-            className="text-sm font-medium text-gray-600 hover:text-[#0e716d] transition-colors"
-          >
-            Pricing
-          </Link>
-          <Link href="/login">
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-[#0e716d] text-[#0e716d] hover:bg-[#0e716d] hover:text-white"
-            >
-              Sign In
-            </Button>
-          </Link>
-        </nav>
-      </header>
-
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-16 md:py-24 lg:py-32 bg-gradient-to-br from-slate-50 to-blue-50">

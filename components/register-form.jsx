@@ -10,6 +10,7 @@ import { useState } from "react";
 import { signup } from "@/lib/actions/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { PasswordInput } from "./ui/password-input";
 
 export function RegisterForm({ className, ...props }) {
   const router = useRouter();
@@ -96,7 +97,7 @@ export function RegisterForm({ className, ...props }) {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="password">Password</Label>
-                <Input
+                <PasswordInput
                   id="password"
                   type="password"
                   required

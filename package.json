@@ -21,6 +21,7 @@
     "filepond": "^4.32.7",
     "filepond-plugin-file-encode": "^2.1.14",
     "filepond-plugin-file-validate-type": "^1.2.9",
+    "filepond-plugin-image-preview": "^4.6.12",
     "katex": "^0.16.22",
     "lucide-react": "^0.513.0",
     "mammoth": "^1.9.1",

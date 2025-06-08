@@ -21,7 +21,7 @@ export default function DocumentProcessing() {
 
         {loading && <p className="text-blue-600 mt-2">Extracting text...</p>}
 
-        <ExtractedTextDisplay text={extractedText} />
+        {/* <ExtractedTextDisplay text={extractedText} /> */}
       </div>
 
       <div className="col-span-2">

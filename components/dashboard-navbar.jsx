@@ -1,9 +1,9 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, Menu, X } from "lucide-react";
+import { Brain, LogOut, Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import LogoutMenuItem from "./ui/logout-menu-item";
+import { createClient } from "@/lib/supabase/client";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
@@ -24,7 +26,28 @@ const navigation = [
 
 export default function DashboardNavbar() {
   const pathname = usePathname();
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    getSession();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur ">
@@ -33,12 +56,13 @@ export default function DashboardNavbar() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">InfoDigest</span>
-            <div className="flex items-center">
-              <div className="h-8 w-8 rounded-full bg-primary"></div>
-              <span className="ml-2 text-lg font-semibold">InfoDigest</span>
+          <Link href="/" className="flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#0e716d] flex items-center justify-center mr-2">
+              <Brain className="h-5 w-5 text-white" />
             </div>
+            <span className="font-bold text-xl text-gray-900">
+              InfoDigest Pro
+            </span>
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -68,28 +92,20 @@ export default function DashboardNavbar() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <DropdownMenu>
+          <DropdownMenu className="px-6">
             <DropdownMenuTrigger className="cursor-pointer">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage src={user?.user_metadata.avatar_url} />
+                <AvatarFallback className="bg-primary text-white">
+                  {user?.email?.charAt(0).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>
-                <form action="/logout" method="post">
-                  <Button
-                    type="submit"
-                    className="bg-transparent hover:bg-transparent w-full p-0 text-black"
-                  >
-                    Logout
-                  </Button>
-                </form>
-              </DropdownMenuItem>
+              <LogoutMenuItem />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -141,25 +157,20 @@ export default function DashboardNavbar() {
               </div>
               <div className="py-6">
                 <div className="flex items-center justify-between">
-                  <DropdownMenu>
+                  <DropdownMenu className="px-6">
                     <DropdownMenuTrigger className="cursor-pointer">
                       <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarImage src={user?.user_metadata?.avatar_url} />
+                        <AvatarFallback className="bg-primary text-white">
+                          {user?.email?.charAt(0).toUpperCase()}
+                        </AvatarFallback>
                       </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                      <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>Profile</DropdownMenuItem>
-                      <DropdownMenuItem>Team</DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <form action="/auth/signout" method="post">
-                          <Button type="submit" className="bg-primary-500">
-                            <LogOut />
-                          </Button>
-                        </form>
-                      </DropdownMenuItem>
+                      <LogoutMenuItem />
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
