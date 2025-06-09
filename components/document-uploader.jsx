@@ -6,10 +6,9 @@ import { registerPlugin } from "react-filepond";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import mammoth from "mammoth";
 import pdfToText from "react-pdftotext";
-import { useState, useEffect, useRef } from "react";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import "react-pdf/dist/esm/Page/TextLayer.css";
+import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { getRandomLetters } from "@/lib/utils";
 
 registerPlugin(FilePondPluginFileValidateType);
 
@@ -33,30 +32,55 @@ export default function DocumentUploader({
         setLoading(true);
 
         try {
+            // 1. Upload file to Supabase Storage
+            const fileExt = file.name.split(".").pop();
+            const fileName = `${user.id}-${Date.now()}.${fileExt}`;
+            const filePath = `${user.id}/${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from("documents") // Your bucket name
+                .upload(filePath, file);
+
+            if (uploadError) {
+                throw uploadError;
+            }
+
+            // 2. Create Sign URL of the uploaded file
+            const {
+                data: { signedUrl },
+            } = await supabase.storage
+                .from("documents")
+                .createSignedUrl(filePath, 1209600); // expires in 2 weeks
+
+            // 3. Extract text content
             const filePreviewUrl = URL.createObjectURL(file);
             setPreviewUrl(filePreviewUrl);
             let textResult = await processDocumentFile(file);
 
+            // 4. Store metadata in database
             const { data, error } = await supabase
                 .from("documents")
                 .insert({
                     user_id: user.id,
-                    file_name: file.name,
+                    document_name: `DOC-${
+                        Math.floor(Math.random() * 9000) + 1000
+                    }-${getRandomLetters(4).toUpperCase()}`,
+                    file_name: fileName,
+                    file_path: filePath,
+                    file_url: signedUrl,
                     extracted_text: textResult,
                 })
                 .select();
 
             if (error) {
-                console.error("Insert error:", error);
-                onFileProcess("Failed to save document to database.");
-                return;
+                throw error;
             }
 
             const newDocument = data[0];
             setStoredDocumentID(newDocument.id);
         } catch (err) {
-            console.error("Processing error:", err);
-            onFileProcess("Failed to extract text.");
+            console.error("Error:", err);
+            onFileProcess("Failed to process document.");
         } finally {
             setLoading(false);
         }
@@ -111,3 +135,22 @@ export default function DocumentUploader({
         return extractedText;
     }
 }
+
+const updateDocumentDB = async (column, contentResult) => {
+    const { data, error } = await supabase
+        .from("documents")
+        .update({
+            [column]: contentResult,
+        })
+        .eq("id", storedDocumentID)
+        .eq("user_id", user.id)
+        .select();
+
+    if (error) {
+        console.error("Update failed:", error);
+        return;
+    }
+
+    console.log("Updated document:", data);
+    return data;
+};

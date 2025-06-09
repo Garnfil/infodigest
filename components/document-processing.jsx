@@ -6,8 +6,11 @@ import ExtractedTextDisplay from "@/components/extracted-text-display";
 import ProcessingTabs from "@/components/document-processing-tabs";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
+import { Card, CardHeader } from "./ui/card";
+import Link from "next/link";
+import { Button } from "./ui/button";
 
-export default function DocumentProcessing() {
+export default function DocumentProcessing({ document }) {
     const supabase = createClient();
     const [extractedText, setExtractedText] = useState("");
     const [loading, setLoading] = useState(false);
@@ -23,6 +26,9 @@ export default function DocumentProcessing() {
         };
 
         getSession();
+
+        setExtractedText(document?.extracted_text);
+        setStoredDocumentID(document?.id);
 
         const {
             data: { subscription },
@@ -40,12 +46,25 @@ export default function DocumentProcessing() {
             <div className="w-full">
                 <h2 className="text-xl font-bold ">Upload PDF or DOCX</h2>
 
-                <DocumentUploader
-                    onFileProcess={setExtractedText}
-                    setLoading={setLoading}
-                    setStoredDocumentID={setStoredDocumentID}
-                    user={user}
-                />
+                {!document ? (
+                    <DocumentUploader
+                        onFileProcess={setExtractedText}
+                        setLoading={setLoading}
+                        setStoredDocumentID={setStoredDocumentID}
+                        user={user}
+                    />
+                ) : (
+                    <Card className="mt-3 rounded">
+                        <CardHeader className="space-y-2">
+                            <h2 className="font-bold text-xl">
+                                {document?.document_name}
+                            </h2>
+                            <Link target="_blank" href={document?.file_url}>
+                                <Button>File Link</Button>
+                            </Link>
+                        </CardHeader>
+                    </Card>
+                )}
 
                 {loading && (
                     <p className="text-blue-600 mt-2">Extracting text...</p>
@@ -60,6 +79,7 @@ export default function DocumentProcessing() {
                         extractedText={extractedText}
                         storedDocumentID={storedDocumentID}
                         user={user}
+                        document={document}
                     />
                 ) : (
                     <div className="flex justify-center items-center flex-col gap-3 my-10">
