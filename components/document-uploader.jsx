@@ -93,6 +93,7 @@ export default function DocumentUploader({
                 maxFiles="1"
                 onupdatefiles={setFiles}
                 allowMultiple={false}
+                allowRevert={false}
                 allowFileEncode={false}
                 allowRemove={true}
                 onremovefile={(error, file) => {
@@ -135,22 +136,3 @@ export default function DocumentUploader({
         return extractedText;
     }
 }
-
-const updateDocumentDB = async (column, contentResult) => {
-    const { data, error } = await supabase
-        .from("documents")
-        .update({
-            [column]: contentResult,
-        })
-        .eq("id", storedDocumentID)
-        .eq("user_id", user.id)
-        .select();
-
-    if (error) {
-        console.error("Update failed:", error);
-        return;
-    }
-
-    console.log("Updated document:", data);
-    return data;
-};

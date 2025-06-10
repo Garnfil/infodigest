@@ -9,6 +9,8 @@ import { createClient } from "@/lib/supabase/client";
 import { Card, CardHeader } from "./ui/card";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { File, Trash } from "lucide-react";
+import { deleteDocument } from "@/lib/actions/document-action";
 
 export default function DocumentProcessing({ document }) {
     const supabase = createClient();
@@ -41,6 +43,11 @@ export default function DocumentProcessing({ document }) {
         };
     }, [supabase]);
 
+    const handleDeleteDocument = async () => {
+        const response = await deleteDocument(document?.id, user);
+        console.log(response);
+    };
+
     return (
         <div className="grid md:grid-cols-3 w-full grid-cols-1 gap-10">
             <div className="w-full">
@@ -59,9 +66,16 @@ export default function DocumentProcessing({ document }) {
                             <h2 className="font-bold text-xl">
                                 {document?.document_name}
                             </h2>
-                            <Link target="_blank" href={document?.file_url}>
-                                <Button>File Link</Button>
-                            </Link>
+                            <div className="flex gap-3">
+                                <Link target="_blank" href={document?.file_url}>
+                                    <Button>
+                                        <File /> File Link
+                                    </Button>
+                                </Link>
+                                <Button variant="destructive">
+                                    <Trash /> Delete
+                                </Button>
+                            </div>
                         </CardHeader>
                     </Card>
                 )}
