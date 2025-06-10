@@ -44,7 +44,7 @@ export default function DocumentProcessing({ document }) {
     }, [supabase]);
 
     const handleDeleteDocument = async () => {
-        const response = await deleteDocument(document?.id, user);
+        const response = await deleteDocument(document, user);
         console.log(response);
     };
 
