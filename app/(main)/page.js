@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Card, CardContent} from "@/components/ui/card";
+import {Badge} from "@/components/ui/badge";
 import {
     FileText,
     MessageCircleQuestion,
@@ -14,6 +14,7 @@ import {
     Clock,
     Zap,
 } from "lucide-react";
+import Link from "next/link";
 
 export const metadata = {
     title: "InfoDigest Pro",
@@ -40,38 +41,37 @@ export default function HomePage() {
                                         </span>
                                     </h1>
                                     <p className="text-xl text-gray-600 max-w-[600px]">
-                                        Transform how you study and research.
-                                        Upload documents, get instant summaries,
-                                        ask questions, and create visual study
-                                        guides—all powered by advanced AI.
+                                        Transform how you study and
+                                        research. Upload documents,
+                                        get instant summaries, ask
+                                        questions, and create visual
+                                        study guides—all powered by
+                                        advanced AI.
                                     </p>
                                 </div>
 
                                 <div className="flex flex-col sm:flex-row gap-4">
-                                    <Button
-                                        size="lg"
-                                        className="bg-[#0e716d] hover:bg-[#0e716d]/90 text-white px-8"
-                                    >
-                                        Start Free Trial
-                                        <ArrowRight className="ml-2 h-4 w-4" />
-                                    </Button>
-                                    <Button
-                                        variant="outline"
-                                        size="lg"
-                                        className="border-gray-300 text-gray-700"
-                                    >
-                                        Watch Demo
-                                    </Button>
+                                    <Link href="/login">
+                                        <Button
+                                            size="lg"
+                                            className="bg-[#0e716d] hover:bg-[#0e716d]/90 text-white px-8"
+                                        >
+                                            Try Now
+                                            <ArrowRight className="ml-2 h-4 w-4" />
+                                        </Button>
+                                    </Link>
                                 </div>
 
                                 <div className="flex items-center gap-8 text-sm text-gray-600">
                                     <div className="flex items-center gap-2">
                                         <CheckCircle className="h-4 w-4 text-[#0e716d]" />
-                                        <span>No credit card required</span>
+                                        <span>
+                                            No credit card required
+                                        </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <CheckCircle className="h-4 w-4 text-[#0e716d]" />
-                                        <span>14-day free trial</span>
+                                        <span>Free to Use</span>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +82,8 @@ export default function HomePage() {
                                         <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
                                             <FileText className="h-5 w-5 text-[#0e716d]" />
                                             <span className="text-sm font-medium">
-                                                research-paper.pdf uploaded
+                                                research-paper.pdf
+                                                uploaded
                                             </span>
                                         </div>
                                         <div className="space-y-2">
@@ -90,8 +91,9 @@ export default function HomePage() {
                                                 <div className="h-2 bg-[#0e716d] rounded-full w-3/4"></div>
                                             </div>
                                             <p className="text-xs text-gray-500">
-                                                Extracting file for summary and
-                                                concept map...
+                                                Extracting file for
+                                                summary and concept
+                                                map...
                                             </p>
                                         </div>
                                         <div className="bg-blue-50 p-4 rounded-lg">
@@ -99,11 +101,13 @@ export default function HomePage() {
                                                 AI Summary Generated
                                             </h4>
                                             <p className="text-xs text-gray-600 leading-relaxed">
-                                                This paper explores machine
-                                                learning applications in
-                                                healthcare, focusing on
-                                                diagnostic accuracy improvements
-                                                and patient outcome
+                                                This paper explores
+                                                machine learning
+                                                applications in
+                                                healthcare, focusing
+                                                on diagnostic accuracy
+                                                improvements and
+                                                patient outcome
                                                 predictions...
                                             </p>
                                         </div>
@@ -167,12 +171,15 @@ export default function HomePage() {
                                 Powerful Features
                             </Badge>
                             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-gray-900">
-                                Everything you need to excel academically
+                                Everything you need to excel
+                                academically
                             </h2>
                             <p className="text-xl text-gray-600 max-w-[800px] mx-auto">
-                                Our AI-powered tools are designed specifically
-                                for students, researchers, and educators who
-                                want to learn more efficiently and effectively.
+                                Our AI-powered tools are designed
+                                specifically for students,
+                                researchers, and educators who want to
+                                learn more efficiently and
+                                effectively.
                             </p>
                         </div>
 
@@ -188,14 +195,18 @@ export default function HomePage() {
                                         </h3>
                                     </div>
                                     <p className="text-gray-600 mb-4">
-                                        Upload PDFs, research papers, or lecture
-                                        notes and get concise, accurate
-                                        summaries instantly. Perfect for quickly
-                                        understanding complex academic content.
+                                        Upload PDFs, research papers,
+                                        or lecture notes and get
+                                        concise, accurate summaries
+                                        instantly. Perfect for quickly
+                                        understanding complex academic
+                                        content.
                                     </p>
                                     <div className="flex items-center gap-2 text-sm text-[#0e716d]">
                                         <Clock className="h-4 w-4" />
-                                        <span>Save 90% of reading time</span>
+                                        <span>
+                                            Save 90% of reading time
+                                        </span>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -211,14 +222,18 @@ export default function HomePage() {
                                         </h3>
                                     </div>
                                     <p className="text-gray-600 mb-4">
-                                        Ask questions directly about your
-                                        documents and get accurate,
-                                        context-aware answers. It&apos;s like
-                                        having a personal tutor available 24/7.
+                                        Ask questions directly about
+                                        your documents and get
+                                        accurate, context-aware
+                                        answers. It&apos;s like having
+                                        a personal tutor available
+                                        24/7.
                                     </p>
                                     <div className="flex items-center gap-2 text-sm text-[#0e716d]">
                                         <Zap className="h-4 w-4" />
-                                        <span>Instant accurate responses</span>
+                                        <span>
+                                            Instant accurate responses
+                                        </span>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -234,14 +249,17 @@ export default function HomePage() {
                                         </h3>
                                     </div>
                                     <p className="text-gray-600 mb-4">
-                                        Transform complex topics into clear,
-                                        visual mind maps. See connections
-                                        between concepts and understand
-                                        relationships in your study material.
+                                        Transform complex topics into
+                                        clear, visual mind maps. See
+                                        connections between concepts
+                                        and understand relationships
+                                        in your study material.
                                     </p>
                                     <div className="flex items-center gap-2 text-sm text-[#0e716d]">
                                         <Brain className="h-4 w-4" />
-                                        <span>Enhanced comprehension</span>
+                                        <span>
+                                            Enhanced comprehension
+                                        </span>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -253,18 +271,22 @@ export default function HomePage() {
                                             <BookOpen className="h-6 w-6 text-[#0e716d]" />
                                         </div>
                                         <h3 className="text-xl font-semibold text-gray-900">
-                                            📓 Personalized Study Guides
+                                            📓 Personalized Study
+                                            Guides
                                         </h3>
                                     </div>
                                     <p className="text-gray-600 mb-4">
-                                        Automatically generate structured,
-                                        personalized study guides from your
-                                        content. Tailored to your learning style
-                                        and academic goals.
+                                        Automatically generate
+                                        structured, personalized study
+                                        guides from your content.
+                                        Tailored to your learning
+                                        style and academic goals.
                                     </p>
                                     <div className="flex items-center gap-2 text-sm text-[#0e716d]">
                                         <Users className="h-4 w-4" />
-                                        <span>Customized for you</span>
+                                        <span>
+                                            Customized for you
+                                        </span>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -286,8 +308,8 @@ export default function HomePage() {
                                 Loved by students worldwide
                             </h2>
                             <p className="text-xl text-gray-600">
-                                See how InfoDigest Pro is transforming academic
-                                success
+                                See how InfoDigest Pro is transforming
+                                academic success
                             </p>
                         </div>
 
@@ -303,10 +325,12 @@ export default function HomePage() {
                                         ))}
                                     </div>
                                     <p className="text-gray-600 mb-4">
-                                        &quot;InfoDigest Pro completely changed
-                                        how I approach research. I can now
-                                        process dozens of papers in the time it
-                                        used to take me to read just one!&quot;
+                                        &quot;InfoDigest Pro
+                                        completely changed how I
+                                        approach research. I can now
+                                        process dozens of papers in
+                                        the time it used to take me to
+                                        read just one!&quot;
                                     </p>
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-full bg-[#0e716d]/10 flex items-center justify-center">
@@ -337,9 +361,10 @@ export default function HomePage() {
                                         ))}
                                     </div>
                                     <p className="text-gray-600 mb-4">
-                                        &quot;The concept mapping feature is
-                                        incredible. It helps me visualize
-                                        complex relationships in my coursework
+                                        &quot;The concept mapping
+                                        feature is incredible. It
+                                        helps me visualize complex
+                                        relationships in my coursework
                                         that I never saw before.&quot;
                                     </p>
                                     <div className="flex items-center gap-3">
@@ -353,7 +378,8 @@ export default function HomePage() {
                                                 James Chen
                                             </div>
                                             <div className="text-xs text-gray-500">
-                                                Medical Student, Stanford
+                                                Medical Student,
+                                                Stanford
                                             </div>
                                         </div>
                                     </div>
@@ -371,10 +397,11 @@ export default function HomePage() {
                                         ))}
                                     </div>
                                     <p className="text-gray-600 mb-4">
-                                        &quot;As a professor, I use InfoDigest
-                                        Pro to quickly review student
-                                        submissions and create better study
-                                        materials. It&lsquo;s a game-changer for
+                                        &quot;As a professor, I use
+                                        InfoDigest Pro to quickly
+                                        review student submissions and
+                                        create better study materials.
+                                        It&lsquo;s a game-changer for
                                         education.&quot;
                                     </p>
                                     <div className="flex items-center gap-3">
@@ -403,11 +430,13 @@ export default function HomePage() {
                     <div className="container px-4 md:px-6 mx-auto text-center">
                         <div className="space-y-8 max-w-3xl mx-auto">
                             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-white">
-                                Ready to transform your academic workflow?
+                                Ready to transform your academic
+                                workflow?
                             </h2>
                             <p className="text-xl text-white/90">
-                                Join thousands of students and researchers who
-                                are already studying smarter, not harder.
+                                Join thousands of students and
+                                researchers who are already studying
+                                smarter, not harder.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -417,23 +446,27 @@ export default function HomePage() {
                                         placeholder="Enter your email"
                                         className="bg-white border-0 text-gray-900 placeholder:text-gray-500"
                                     />
-                                    <Button
-                                        size="lg"
-                                        className="bg-white text-[#0e716d] hover:bg-gray-100 font-semibold"
-                                    >
-                                        Start Free Trial
-                                    </Button>
+                                    <Link href="/login">
+                                        <Button
+                                            size="lg"
+                                            className="bg-white text-[#0e716d] hover:bg-gray-100 font-semibold"
+                                        >
+                                            Try Now
+                                        </Button>
+                                    </Link>
                                 </div>
                             </div>
 
                             <div className="flex items-center justify-center gap-8 text-sm text-white/80">
                                 <div className="flex items-center gap-2">
                                     <CheckCircle className="h-4 w-4" />
-                                    <span>14-day free trial</span>
+                                    <span>Free to Use</span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <CheckCircle className="h-4 w-4" />
-                                    <span>No credit card required</span>
+                                    <span>
+                                        No credit card required
+                                    </span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <CheckCircle className="h-4 w-4" />

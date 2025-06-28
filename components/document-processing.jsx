@@ -1,18 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import DocumentUploader from "@/components/document-uploader";
 import ExtractedTextDisplay from "@/components/extracted-text-display";
 import ProcessingTabs from "@/components/document-processing-tabs";
 import Image from "next/image";
-import { createClient } from "@/lib/supabase/client";
-import { Card, CardHeader } from "./ui/card";
+import {createClient} from "@/lib/supabase/client";
+import {Card, CardHeader} from "./ui/card";
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { File, Trash } from "lucide-react";
-import { deleteDocument } from "@/lib/actions/document-action";
+import {Button} from "./ui/button";
+import {File, Trash} from "lucide-react";
+import {deleteDocument} from "@/lib/actions/document-action";
+import Swal from "sweetalert2";
+import {useRouter} from "next/navigation";
 
-export default function DocumentProcessing({ document }) {
+export default function DocumentProcessing({document}) {
+    const router = useRouter();
     const supabase = createClient();
     const [extractedText, setExtractedText] = useState("");
     const [loading, setLoading] = useState(false);
@@ -22,7 +25,7 @@ export default function DocumentProcessing({ document }) {
     useEffect(() => {
         const getSession = async () => {
             const {
-                data: { user },
+                data: {user},
             } = await supabase.auth.getUser();
             setUser(user);
         };
@@ -33,7 +36,7 @@ export default function DocumentProcessing({ document }) {
         setStoredDocumentID(document?.id);
 
         const {
-            data: { subscription },
+            data: {subscription},
         } = supabase.auth.onAuthStateChange((event, session) => {
             setUser(session?.user ?? null);
         });
@@ -44,14 +47,51 @@ export default function DocumentProcessing({ document }) {
     }, [supabase]);
 
     const handleDeleteDocument = async () => {
-        const response = await deleteDocument(document, user);
-        console.log(response);
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to recover this document!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#0e716d",
+            cancelButtonColor: "#000",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel",
+            reverseButtons: true,
+        });
+
+        // Only proceed if confirmed
+        if (result.isConfirmed) {
+            try {
+                const response = await deleteDocument(document, user);
+
+                // Show success message
+                await Swal.fire({
+                    title: "Deleted!",
+                    text: "Your document has been deleted.",
+                    icon: "success",
+                    timer: 2000,
+                    showConfirmButton: false,
+                });
+                console.log("Success: ", response);
+                router.push("/history");
+            } catch (error) {
+                // Show error message
+                await Swal.fire({
+                    title: "Error!",
+                    text: "Failed to delete document. Please try again.",
+                    icon: "error",
+                });
+                console.error("Delete failed:", error);
+            }
+        }
     };
 
     return (
         <div className="grid md:grid-cols-3 w-full grid-cols-1 gap-10">
             <div className="w-full">
-                <h2 className="text-xl font-bold ">Upload PDF or DOCX</h2>
+                <h2 className="text-xl font-bold ">
+                    Upload PDF or DOCX
+                </h2>
 
                 {!document ? (
                     <DocumentUploader
@@ -67,12 +107,18 @@ export default function DocumentProcessing({ document }) {
                                 {document?.document_name}
                             </h2>
                             <div className="flex gap-3">
-                                <Link target="_blank" href={document?.file_url}>
+                                <Link
+                                    target="_blank"
+                                    href={document?.file_url}
+                                >
                                     <Button>
                                         <File /> File Link
                                     </Button>
                                 </Link>
-                                <Button variant="destructive">
+                                <Button
+                                    variant="destructive"
+                                    onClick={handleDeleteDocument}
+                                >
                                     <Trash /> Delete
                                 </Button>
                             </div>
@@ -81,7 +127,9 @@ export default function DocumentProcessing({ document }) {
                 )}
 
                 {loading && (
-                    <p className="text-blue-600 mt-2">Extracting text...</p>
+                    <p className="text-blue-600 mt-2">
+                        Extracting text...
+                    </p>
                 )}
 
                 <ExtractedTextDisplay text={extractedText} />

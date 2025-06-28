@@ -1,19 +1,19 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import {cn} from "@/lib/utils";
+import {Button} from "@/components/ui/button";
+import {Card, CardContent} from "@/components/ui/card";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
 import Link from "next/link";
-import { useState } from "react";
-import { login } from "@/lib/actions/auth";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { PasswordInput } from "./ui/password-input";
-import { createClient } from "@/lib/supabase/client";
+import {useState} from "react";
+import {login} from "@/lib/actions/auth";
+import {toast} from "sonner";
+import {useRouter} from "next/navigation";
+import {PasswordInput} from "./ui/password-input";
+import {createClient} from "@/lib/supabase/client";
 
-export function LoginForm({ className, ...props }) {
+export function LoginForm({className, ...props}) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
@@ -38,7 +38,7 @@ export function LoginForm({ className, ...props }) {
         return;
       }
 
-      toast.success("Login Success!", { position: "top-center" });
+      toast.success("Login Success!", {position: "top-center"});
       router.push("/dashboard");
     } catch (error) {
       console.log("Error: ", error);
@@ -52,7 +52,7 @@ export function LoginForm({ className, ...props }) {
       setIsGoogleLoading(true);
       const supabase = createClient();
 
-      const { error } = await supabase.auth.signInWithOAuth({
+      const {error} = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
@@ -162,7 +162,10 @@ export function LoginForm({ className, ...props }) {
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
-                <Link href="/register" className="underline underline-offset-4">
+                <Link
+                  href="/register"
+                  className="underline underline-offset-4"
+                >
                   Sign up
                 </Link>
               </div>
@@ -178,8 +181,9 @@ export function LoginForm({ className, ...props }) {
         </CardContent>
       </Card>
       <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our{" "}
+        <a href="#">Terms of Service</a> and{" "}
+        <a href="#">Privacy Policy</a>.
       </div>
     </div>
   );

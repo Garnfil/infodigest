@@ -38,6 +38,7 @@
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "sonner": "^2.0.5",
+    "sweetalert2": "^11.22.0",
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
