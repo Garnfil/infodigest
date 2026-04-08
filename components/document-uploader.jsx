@@ -1,14 +1,14 @@
 "use client";
 
-import { FilePond } from "react-filepond";
+import {FilePond} from "react-filepond";
 import "filepond/dist/filepond.min.css";
-import { registerPlugin } from "react-filepond";
+import {registerPlugin} from "react-filepond";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import mammoth from "mammoth";
 import pdfToText from "react-pdftotext";
-import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { getRandomLetters } from "@/lib/utils";
+import {useState, useEffect} from "react";
+import {createClient} from "@/lib/supabase/client";
+import {getRandomLetters} from "@/lib/utils";
 
 registerPlugin(FilePondPluginFileValidateType);
 
@@ -37,17 +37,18 @@ export default function DocumentUploader({
             const fileName = `${user.id}-${Date.now()}.${fileExt}`;
             const filePath = `${user.id}/${fileName}`;
 
-            const { error: uploadError } = await supabase.storage
+            const {error: uploadError} = await supabase.storage
                 .from("documents") // Your bucket name
                 .upload(filePath, file);
 
             if (uploadError) {
+                console.error("Upload error:", uploadError);
                 throw uploadError;
             }
 
             // 2. Create Sign URL of the uploaded file
             const {
-                data: { signedUrl },
+                data: {signedUrl},
             } = await supabase.storage
                 .from("documents")
                 .createSignedUrl(filePath, 1209600); // expires in 2 weeks
@@ -58,7 +59,7 @@ export default function DocumentUploader({
             let textResult = await processDocumentFile(file);
 
             // 4. Store metadata in database
-            const { data, error } = await supabase
+            const {data, error} = await supabase
                 .from("documents")
                 .insert({
                     user_id: user.id,
