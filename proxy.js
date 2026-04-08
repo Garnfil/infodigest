@@ -1,7 +1,7 @@
 import { updateSession } from "@/lib/supabase/middleware";
 import { NextResponse } from "next/server";
 
-export async function middleware(request) {
+export async function proxy(request) {
   // First, update the user's auth session
   const response = await updateSession(request);
 
