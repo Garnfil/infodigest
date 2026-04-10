@@ -1,4 +1,4 @@
-import DocumentProcessing from "@/components/document-processing";
+import DocumentProcessing from "@/components/documents/document-processing";
 import {getUser} from "@/lib/actions/auth";
 import {getDocument} from "@/lib/actions/document-action";
 import React from "react";
