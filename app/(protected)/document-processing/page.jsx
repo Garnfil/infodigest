@@ -1,5 +1,5 @@
-import DocumentProcessing from "@/components/document-processing";
-import { Button } from "@/components/ui/button";
+import DocumentProcessing from "@/components/documents/document-processing";
+import {Button} from "@/components/ui/button";
 
 export const metadata = {
     title: "Document Processing",

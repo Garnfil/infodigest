@@ -1,14 +1,14 @@
 "use client";
 
 import {useEffect, useState} from "react";
-import DocumentUploader from "@/components/document-uploader";
-import ExtractedTextDisplay from "@/components/extracted-text-display";
-import ProcessingTabs from "@/components/document-processing-tabs";
+import DocumentUploader from "@/components/documents/document-uploader";
+import ExtractedTextDisplay from "@/components/documents/extracted-text-display";
+import ProcessingTabs from "@/components/documents/document-processing-tabs";
 import Image from "next/image";
 import {createClient} from "@/lib/supabase/client";
-import {Card, CardHeader} from "./ui/card";
+import {Card, CardHeader} from "@/components/ui/card";
 import Link from "next/link";
-import {Button} from "./ui/button";
+import {Button} from "@/components/ui/button";
 import {File, Trash} from "lucide-react";
 import {deleteDocument} from "@/lib/actions/document-action";
 import Swal from "sweetalert2";

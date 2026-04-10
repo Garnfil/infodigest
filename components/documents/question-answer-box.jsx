@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { ask } from "@/lib/actions/document-processing-action";
-import LoadingSpinner from "./ui/generate-content-spinner";
+import React, {useState} from "react";
+import {Button} from "../ui/button";
+import {Input} from "../ui/input";
+import {ask} from "@/lib/actions/document-processing-action";
+import LoadingSpinner from "../ui/generate-content-spinner";
 import MarkdownRenderer from "./markdown-renderer";
 
-export default function QuestionAnswerBox({ extractedText }) {
+export default function QuestionAnswerBox({extractedText}) {
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState("");
     const [askLoading, setAskLoading] = useState(false);
@@ -25,7 +25,10 @@ export default function QuestionAnswerBox({ extractedText }) {
 
     return (
         <div className="space-y-4">
-            <form onSubmit={handleQuestionSubmit} className="space-y-4">
+            <form
+                onSubmit={handleQuestionSubmit}
+                className="space-y-4"
+            >
                 <div className="mt-3">
                     <label
                         htmlFor="question"
@@ -38,7 +41,9 @@ export default function QuestionAnswerBox({ extractedText }) {
                             type="text"
                             id="question"
                             value={question}
-                            onChange={(e) => setQuestion(e.target.value)}
+                            onChange={(e) =>
+                                setQuestion(e.target.value)
+                            }
                             className="flex-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
                             placeholder="Enter your question here..."
                         />
